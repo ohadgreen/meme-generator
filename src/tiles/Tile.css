@@ -1,0 +1,14 @@
+.tiles--wrapper {
+    margin: 100px;
+}
+
+.tile--1 {
+    margin: 10px;
+    height: 3rem;
+    width: 3rem;
+    font-weight: bolder;
+    text-align: center;
+    color: darkblue;
+    border: 3px solid black;
+    border-radius: 10%;
+}

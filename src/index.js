@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import CounterWrapper from "./counter/CounterWrapper";
+import TilesWrapper from "./tiles/TilesWrapper";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<App />}/>
+              <Route path="/counter" element={<CounterWrapper />}/>
+              <Route path="/tiles" element={<TilesWrapper />}/>
+              <Route path="/ynet" element={"https://www.ynet.co.il/"}/>
+          </Routes>
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

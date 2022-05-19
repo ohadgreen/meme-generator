@@ -1,22 +1,20 @@
-import React, { useState } from "react"
+import React, {useState} from "react"
 import "./meme.css"
 import memesData from "./MemesData"
-import troll from "../header/troll-img.png";
 
 export default function Meme() {
 
     const [myMeme, setMyMeme] = useState({
         topText: '',
         bottomText: '',
-        memeUrl: '',
+        memeUrl: 'http://i.imgflip.com/1bij.jpg',
         allMemes: memesData.data.memes
     })
 
     function getRandomMemeData() {
         const memesArray = memesData.data.memes
         const rand = Math.floor(Math.random() * memesArray.length)
-        let randomMeme = memesArray[rand]
-        return randomMeme
+        return memesArray[rand]
     }
 
     const handleSubmit = (evt) => {
