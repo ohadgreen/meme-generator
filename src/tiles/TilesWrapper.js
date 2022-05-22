@@ -4,19 +4,39 @@ import "./Tile.css"
 
 export default function TilesWrapper() {
 
-    const tilesNumber = 8
+    const tilesNumber = 16
+    const numbers = [...Array(tilesNumber).keys()]
+    let tilesInit = []
+    numbers.forEach(i => {
+        tilesInit.push({
+            index: i,
+            on: false
+        })
+    })
 
-    let tiles = [...Array(tilesNumber).keys()].map((index) => {
-                    console.log(index + 1)
-                    return (
-                            < Tile number={index + 1}/>
-                    )
-                })
+    const [boxes, setBoxes] = React.useState(tilesInit)
+
+    const toggleTile = (i) => {
+        let boxToUpdate = boxes[i]
+        boxToUpdate = {...boxToUpdate, on: !boxToUpdate.on}
+
+        let newBoxes = [...boxes]
+        newBoxes[i] = boxToUpdate
+        setBoxes(newBoxes)
+    }
+
+    let tiles1 = boxes.map((box, index) => {
+        return (
+                < Tile tile={box}
+                toggleTile={toggleTile}
+                />
+            )
+    })
 
     return (
         <div className="tiles--wrapper">
         <h1>Switch Boxes</h1>
-            { tiles }
+            { tiles1 }
         </div>
     )
 }
