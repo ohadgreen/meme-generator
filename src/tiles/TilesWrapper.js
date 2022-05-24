@@ -4,21 +4,11 @@ import "./Tile.css"
 
 export default function TilesWrapper() {
 
-    const tilesNumber = 16
-    const numbers = [...Array(tilesNumber).keys()]
-    let tilesInit = []
-    numbers.forEach(i => {
-        tilesInit.push({
-            index: i,
-            on: false
-        })
-    })
-
-    const [boxes, setBoxes] = React.useState(tilesInit)
+    const [boxes, setBoxes] = React.useState(initTilesArray())
 
     const toggleTile = (i) => {
         let boxToUpdate = boxes[i]
-        boxToUpdate = {...boxToUpdate, on: !boxToUpdate.on}
+        boxToUpdate = {...boxToUpdate, mode: boxToUpdate.mode === "HIDDEN" ? "VISIBLE" : "HIDDEN"}
 
         let newBoxes = [...boxes]
         newBoxes[i] = boxToUpdate
@@ -27,8 +17,9 @@ export default function TilesWrapper() {
 
     let tiles1 = boxes.map((box, index) => {
         return (
-                < Tile tile={box}
-                toggleTile={toggleTile}
+                <   Tile tile={box}
+                    key={index}
+                    toggleTile={toggleTile}
                 />
             )
     })
@@ -39,4 +30,25 @@ export default function TilesWrapper() {
             { tiles1 }
         </div>
     )
+}
+
+function initTilesArray() {
+    const tilesNumber = 16
+    const numbers = [...Array(tilesNumber).keys()]
+    const colors = ["red", "blue", "orange", "green", "black", "grey", "brown", "purple"]
+    const colorsTemp = colors.concat(colors)
+
+    let tilesInit = []
+
+    for (let i = 0; i < tilesNumber; i++) {
+        const rand = Math.floor(Math.random() * (tilesNumber - 1 - i))
+
+        tilesInit.push({
+            index: i,
+            mode: "HIDDEN",
+            color: colorsTemp[rand]
+        })
+        colorsTemp[rand] = colorsTemp[tilesNumber - 1 - i]
+    }
+    return tilesInit
 }
