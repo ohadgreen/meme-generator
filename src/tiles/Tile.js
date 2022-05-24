@@ -22,7 +22,7 @@ export default function Tile(props) {
             <div
                 className="tile--one--off"
                  style={{ backgroundColor: tileDisplayColor }}
-                 onClick={() => props.toggleTile(props.tile.index)}
+                 onClick={() => props.flipTile(props.tile.index)}
             >{props.tile.index + 1}</div>
     )
 }
