@@ -9,38 +9,29 @@ export default function TilesWrapper() {
         firstTileFlipped: "",
         secondTileFlipped: "",
         totalPairsDiscovered: 0,
+        turnsCount: 0,
         tilesArray: initTilesArray()
     })
 
     const flipTile = (i) => {
         if (gameStatus.tilesVisible === 0) {
-            let tileToUpdate = gameStatus.tilesArray[i]
-            tileToUpdate = {...tileToUpdate, mode: "VISIBLE"}
-            let newTilesArray = [...gameStatus.tilesArray]
-            newTilesArray[i] = tileToUpdate
-
             setGameStatus(prevState => {
                 return {
                     ...prevState,
                     tilesVisible: 1,
                     firstTileFlipped: i,
-                    tilesArray: newTilesArray
+                    tilesArray: updateTilesInArray(i, null, "VISIBLE")
                 }
             })
         }
 
         if (gameStatus.tilesVisible === 1) {
-            let tileToUpdate = gameStatus.tilesArray[i]
-            tileToUpdate = {...tileToUpdate, mode: "VISIBLE"}
-            let newTilesArray = [...gameStatus.tilesArray]
-            newTilesArray[i] = tileToUpdate
-
              setGameStatus(prevState => {
                 return {
                     ...prevState,
                     tilesVisible: 2,
                     secondTileFlipped: i,
-                    tilesArray: newTilesArray
+                    tilesArray: updateTilesInArray(i, null, "VISIBLE")
                 }
             })
         }
@@ -51,18 +42,9 @@ export default function TilesWrapper() {
 
     function newTurn() {
         if (gameStatus.tilesVisible === 2) {
+            const totalTurns = gameStatus.turnsCount + 1
             if (gameStatus.tilesArray[gameStatus.firstTileFlipped].color === gameStatus.tilesArray[gameStatus.secondTileFlipped].color) {
-                console.log(gameStatus.totalPairsDiscovered + 1 + " match!")
-
-                let newTilesArray = [...gameStatus.tilesArray]
-
-                let tileToUpdate = gameStatus.tilesArray[gameStatus.firstTileFlipped]
-                tileToUpdate = {...tileToUpdate, mode: "GONE"}
-                newTilesArray[gameStatus.firstTileFlipped] = tileToUpdate
-
-                tileToUpdate = gameStatus.tilesArray[gameStatus.secondTileFlipped]
-                tileToUpdate = {...tileToUpdate, mode: "GONE"}
-                newTilesArray[gameStatus.secondTileFlipped] = tileToUpdate
+                console.log((gameStatus.totalPairsDiscovered + 1) + " matches in "  + totalTurns + " turns")
 
                 setGameStatus(prevState => {
                 return {
@@ -70,30 +52,21 @@ export default function TilesWrapper() {
                     tilesVisible: 0,
                     firstTileFlipped: "",
                     secondTileFlipped: "",
+                    turnsCount: totalTurns,
                     totalPairsDiscovered: prevState.totalPairsDiscovered + 1,
-                    tilesArray: newTilesArray
+                    tilesArray: updateTilesInArray(gameStatus.firstTileFlipped, gameStatus.secondTileFlipped, "GONE")
                 }
             })
             } else {
-                console.log("try again")
-
-                let newTilesArray = [...gameStatus.tilesArray]
-
-                let tileToUpdate = gameStatus.tilesArray[gameStatus.firstTileFlipped]
-                tileToUpdate = {...tileToUpdate, mode: "HIDDEN"}
-                newTilesArray[gameStatus.firstTileFlipped] = tileToUpdate
-
-                tileToUpdate = gameStatus.tilesArray[gameStatus.secondTileFlipped]
-                tileToUpdate = {...tileToUpdate, mode: "HIDDEN"}
-                newTilesArray[gameStatus.secondTileFlipped] = tileToUpdate
-
+                console.log(totalTurns + " turns")
                 setGameStatus(prevState => {
                 return {
                     ...prevState,
                     tilesVisible: 0,
                     firstTileFlipped: "",
                     secondTileFlipped: "",
-                    tilesArray: newTilesArray
+                    turnsCount: totalTurns,
+                    tilesArray: updateTilesInArray(gameStatus.firstTileFlipped, gameStatus.secondTileFlipped, "HIDDEN")
                 }
             })
             }
@@ -101,6 +74,21 @@ export default function TilesWrapper() {
         setGameStatus(prevState => {
             return {...prevState, tilesVisible: 0, firstTileFlipped: ""}
         })
+    }
+
+        function updateTilesInArray(firstTileIndex, secondTileIndex, mode) {
+        let newTilesArray = [...gameStatus.tilesArray]
+
+        let tileToUpdate = gameStatus.tilesArray[firstTileIndex]
+        tileToUpdate = {...tileToUpdate, mode: mode}
+        newTilesArray[firstTileIndex] = tileToUpdate
+
+        if (secondTileIndex !== null) {
+            tileToUpdate = gameStatus.tilesArray[secondTileIndex]
+            tileToUpdate = {...tileToUpdate, mode: mode}
+            newTilesArray[secondTileIndex] = tileToUpdate
+        }
+        return newTilesArray
     }
 
     let tiles1 = gameStatus.tilesArray.map((box, index) => {
@@ -125,7 +113,6 @@ export default function TilesWrapper() {
 
 function initTilesArray() {
     const tilesNumber = 16
-    const numbers = [...Array(tilesNumber).keys()]
     const colors = ["red", "blue", "orange", "green", "black", "grey", "brown", "purple"]
     const colorsTemp = colors.concat(colors)
 
