@@ -2,18 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import CounterWrapper from "./counter/CounterWrapper";
-import TilesWrapper from "./tiles/TilesWrapper";
+import CounterWrapper from "./components/counter/CounterWrapper";
+import TilesWrapper from "./components/tiles/TilesWrapper";
+import SubscriptionForm from "./components/form/SubscribeForm";
+import Meme from "./components/meme/Meme";
 
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
           <Routes>
-              <Route path="/" element={<App />}/>
+              <Route path="/" element={<Meme />}/>
               <Route path="/counter" element={<CounterWrapper />}/>
               <Route path="/tiles" element={<TilesWrapper />}/>
+              <Route path="/subscribe" element={<SubscriptionForm />}/>
               <Route path="/ynet" element={"https://www.ynet.co.il/"}/>
           </Routes>
       </BrowserRouter>
