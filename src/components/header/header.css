@@ -1,0 +1,39 @@
+
+.header {
+    display: flex;
+    align-items: center;
+    height: 65px;
+    background: linear-gradient(90deg, #672280 1.18%, #A626D3 100%);
+    color: white;
+    padding: 20px;
+}
+
+.header--image {
+    height: 100%;
+    margin-right: 6px;
+}
+
+.header--title {
+    font-size: 1.25rem;
+    margin-right: auto;
+}
+
+.header--menu {
+    display: flex;
+    flex-direction: row;
+}
+
+.header--menu > a {
+    margin: 2rem;
+    color: white;
+    font-size: 1rem;
+}
+
+.header--menu > a:hover {
+    color: gold;
+}
+
+.header--subtitle {
+    font-size: 1rem;
+    font-weight: 500;
+}

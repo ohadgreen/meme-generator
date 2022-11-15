@@ -1,0 +1,23 @@
+.tiles--wrapper {
+    margin: 100px;
+    box-sizing: border-box;
+}
+
+.tile--one--off {
+    height: 100px;
+    width: 100px;
+    border: 3px solid black;
+    display: inline-block;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.tile--one--on {
+    background-color: lightsalmon;
+    height: 100px;
+    width: 100px;
+    border: 3px solid black;
+    display: inline-block;
+    margin: 10px;
+    border-radius: 5px;
+}
